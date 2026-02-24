@@ -1,4 +1,4 @@
-# Babaha Ba? 🌊
+# Babaha Ba?
 
 A full-stack IoT system designed for real-time flood detection and predictive alerts. This system helps residents prepare by calculating how many minutes are remaining before floodwaters reach a specific household threshold.
 
