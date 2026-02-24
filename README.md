@@ -11,6 +11,7 @@ A full-stack IoT system designed for real-time flood detection and predictive al
 ## Tech Stack
 * **Frontend:** React.js, Tailwind CSS, Lucide Icons
 * **Backend:** PHP (API)
+* **AI Model:** Gemini API
 * **Database:** MySQL
 * **Hardware/IoT:** Ultrasonic Sensor
 
