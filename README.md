@@ -9,7 +9,7 @@ A full-stack IoT system designed for real-time flood detection and predictive al
 * **Custom Thresholds:** Users can set their own house elevation for personalized alerts.
 
 ## Tech Stack
-* **Frontend:** React.js, Tailwind CSS, Lucide Icons
+* **Frontend:** React.js + Vite, CSS, Lucide Icons
 * **Backend:** PHP (API)
 * **AI Model:** Gemini API
 * **Database:** MySQL

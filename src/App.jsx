@@ -10,7 +10,7 @@ export default function App() {
   const [loading,   setLoading]   = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost/localizedfloodwarning/get_threshold.php")
+    fetch("http://localhost/Babaha-Ba-/get_threshold.php")
       .then(res => res.json())
       .then(data => {
         if (data && data.house_threshold) {
@@ -25,7 +25,7 @@ export default function App() {
   }, []);
 
   const getReading = () => {
-    fetch("http://localhost/localizedfloodwarning/get_reading.php")
+    fetch("http://localhost/Babaha-Ba-/get_reading.php")
       .then(res => res.json())
       .then(data => { 
         setReading(prev => {
@@ -39,7 +39,7 @@ export default function App() {
   };
 
   const saveCm = (cmInput) => {
-    fetch("http://localhost/localizedfloodwarning/save_threshold.php", {
+    fetch("http://localhost/Babaha-Ba-/save_threshold.php", {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
       body:    JSON.stringify({ threshold_lvl: cmInput }),
