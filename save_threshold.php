@@ -27,24 +27,7 @@ switch ($method) {
             echo json_encode(["error" => "Invalid JSON"]);
             exit();
         }
-
-        //sanitize threshold level
-        // if less than 1, set it to 1. if greater than 10, force it to 10
-        // $threshold_level = max(1, min(10, (int) ($decoded_data['threshold_lvl'] ?? 0))); removed this because we're not following the level 1 - 10 anymore 
         
-        /*following the logic:
-        13 max = Lvl 10
-        14 = Lvl 9
-        15 = Lvl 8
-        16 = Lvl 7
-        17 = Lvl 6
-        18 = Lvl 5
-        19 = Lvl 4
-        20 = Lvl 3
-        21 = Lvl 2
-        22 = Lvl 1
-        23 <+ = Lvl 0 (Normal)
-        */
     $threshold_level = $decoded_data['threshold_lvl'] ?? 0;
         // Update the only settings row
         $stmt = $pdo->prepare("UPDATE settings SET house_threshold = ? WHERE id = 1");

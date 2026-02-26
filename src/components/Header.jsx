@@ -9,7 +9,7 @@ const Header = ({ theme, onBack }) => {
   const fetchReadings = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost/LocalizedFloodWarning/get_all_readings.php');
+      const response = await fetch('http://localhost/Babaha-Ba-/get_all_readings.php');
       const data = await response.json();
       setReadings(Array.isArray(data) ? data : []);
     } catch (error) {
