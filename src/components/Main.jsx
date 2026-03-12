@@ -6,7 +6,7 @@ import happyAsset from "../assets/2.svg";
 import anxiousAsset from "../assets/3.svg";
 import panickedAsset from "../assets/4.svg";
 // import { HappyIllust, AnxiousIllust, PanickedIllust } from "./SVG";
-import { WavesArrowUp, TriangleAlert, Timer } from "lucide-react";
+import { WavesArrowUp, TriangleAlert, Smile } from "lucide-react";
 
 const ILLUSTS = { safe: happyAsset, watchful: anxiousAsset, danger: panickedAsset };
 //changed it to the svg images in the assets
@@ -108,7 +108,7 @@ const Main = ({ threshold, onBack, reading }) => {
 
           <div className="fadeUp" style={{ width: "100%", animationDelay: "100ms" }}>
              <div style={{ background: theme.header, padding: "18px", borderRadius: "16px", color: "white", textAlign: "center", boxShadow: `0 8px 20px ${theme.accent}30` }}>
-                <p style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: "10px", fontWeight: 800, opacity: 0.9, textTransform: "uppercase", letterSpacing: "0.1em" }}>Estimated Arrival (Minutes)</p>
+                <p style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: "10px", fontWeight: 800, opacity: 0.9, textTransform: "uppercase", letterSpacing: "0.1em" }}>Remaining minutes before flood reaches your home</p>
                 
                 <h2 className={isFlashing ? "flashing-0" : ""} style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: "44px", fontWeight: 900, margin: "2px 0", lineHeight: 1 }}>
                     {etaText}
@@ -130,8 +130,8 @@ const Main = ({ threshold, onBack, reading }) => {
         <div style={{ padding: "24px 18px 0" }}>
           <p style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: "10.5px", fontWeight: 700, color: "#94a3b8", letterSpacing: "0.08em", textTransform: "uppercase", margin: "0 0 12px 0" }}>Mga Sukatan</p>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            <MetricCard icon={<WavesArrowUp size={22} />} label="Water Level" tagalog="Antas ng Tubig" value={levelCm} theme={theme} delay={0} />
-            <MetricCard icon={<Timer size={22} />} label="Mood" tagalog="Lagay" value={reading?.mood_label} theme={theme} delay={70} />
+            <MetricCard icon={<WavesArrowUp size={22} />} label="Water Level" tagalog="Antas ng Tubig" value={levelCm} theme={theme} delay={0} unit="cm" />
+            <MetricCard icon={<Smile size={22} />} label="Mood" tagalog="Lagay" value={reading?.mood_label} theme={theme} delay={70} />
             <MetricCard icon={<TriangleAlert size={22} />} label="Threshold" tagalog="Limitasyon" value={threshold} unit="cm" theme={theme} delay={140} />
           </div>
         </div>

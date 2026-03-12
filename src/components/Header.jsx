@@ -52,13 +52,25 @@ const Header = ({ theme, onBack }) => {
           )}
         </div>
 
-        <h1 className="font-jakarta sans-serif font-bold text-2xl text-white tracking-tight leading-tight">
-          Babaha Ba?
-        </h1>
-
+<div style={{ textAlign: "center" }}>
+  <h1
+    style={{
+      fontFamily: "'Plus Jakarta Sans', sans-serif",
+      fontWeight: 900,
+      fontSize: "32px",
+      letterSpacing: "0.04em",
+      color: theme.accentSoft,
+      textShadow: `0 1px 3px ${theme.accent}`,
+      margin: 0,
+      lineHeight: 1.1,
+    }}
+  >
+    Babaha ba?
+  </h1>
+</div>
         <div style={{ flex: 1, textAlign: 'right' }}>
           <button className="back-btn" onClick={toggleDrawer}>
-            View Reading History
+            Tignan ang history ng baha
           </button>
         </div>
       </div>
@@ -124,7 +136,7 @@ const Header = ({ theme, onBack }) => {
           )}
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
             <thead>
-              <tr style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: '#fff', position: 'sticky', top: 0 }}>
+              <tr style={{ background: theme.header, color: '#fff', position: 'sticky', top: 0 }}>
                 <th style={{ padding: '14px 12px', textAlign: 'left', fontWeight: '600', letterSpacing: '0.5px' }}>Date/Time</th>
                 <th style={{ padding: '14px 12px', textAlign: 'center', fontWeight: '600', letterSpacing: '0.5px' }}>Water Level</th>
                 <th style={{ padding: '14px 12px', textAlign: 'center', fontWeight: '600', letterSpacing: '0.5px' }}>Status</th>

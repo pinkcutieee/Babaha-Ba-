@@ -124,24 +124,32 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* ── Back button (used inside Header on Dashboard) ─────────────── */
 .back-btn {
-  background: none;
-  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
-  padding: 4px 0;
-  transition: color 0.15s;
+  color: white;
+  padding: 6px 16px;
+  transition: all 0.2s ease;
 }
 
 .back-btn:hover {
-  color: white;
+  background: white;
+  color: #1e293b;
+  border-color: white;
+  transform: translateY(-1px);
 }
 
+.back-btn:active {
+  transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgb(28, 159, 155);
+}
 
 /* ── Landing page large number input ───────────────────────────── */
 .input-field {
