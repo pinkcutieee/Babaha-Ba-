@@ -1,4 +1,4 @@
-import { useState }          from "react";
+import { Fragment, useState }          from "react";
 import { MAX_LV, THEMES }    from "../components/Themes";
 import { getMood }           from "../utils/floodUtils";
 import { Waves } from "lucide-react";
@@ -7,6 +7,20 @@ const RANGE_GUIDE = [
   { label: "Ligtas",   range: "1–4 lvl",   color: "#10b981", bg: "#d1fae5" },
   { label: "Babala",   range: "6–8 lvl", color: "#f59e0b", bg: "#fef3c7" },
   { label: "Panganib", range: "9–10 lvl", color: "#ef4444", bg: "#fee2e2" },
+];
+
+const CONVERSION_REFERENCE = [
+  { cm: "≤ 13 cm", level: "Lvl 10" },
+  { cm: "14 cm", level: "Lvl 9" },
+  { cm: "15 cm", level: "Lvl 8" },
+  { cm: "16 cm", level: "Lvl 7" },
+  { cm: "17 cm", level: "Lvl 6" },
+  { cm: "18 cm", level: "Lvl 5" },
+  { cm: "19 cm", level: "Lvl 4" },
+  { cm: "20 cm", level: "Lvl 3" },
+  { cm: "21 cm", level: "Lvl 2" },
+  { cm: "22 cm", level: "Lvl 1" },
+  { cm: "≥ 23 cm", level: "Lvl 0 (Normal)" },
 ];
 
 const FloodLevel = ({ onSubmit }) => {
@@ -18,13 +32,6 @@ const FloodLevel = ({ onSubmit }) => {
   const valid = raw !== "" && !isNaN(numVal) && numVal >= 0 && numVal <= MAX_LV;
   const previewMood = valid ? getMood(numVal) : null;
   const previewT    = previewMood ? THEMES[previewMood] : null;
-
-  const cmStatusText = (() => {
-    if (!valid) return "Maglagay ng lvl mula sa 0-10 para makita ang katumbas na cm.";
-    if (numVal >= 10) return "Katumbas: 13 cm o mas mababa.";
-    if (numVal <= 0) return "Katumbas: 23 cm o mas mababa.";
-    return `Katumbas: ${Number((23 - numVal).toFixed(1))} cm.`;
-  })();
 
   const accentColor = previewT?.landingAccent ?? "#0284c7";
   const bgGrad      = previewT?.landingBg
@@ -190,18 +197,63 @@ const FloodLevel = ({ onSubmit }) => {
             </div>
           </div>
 
-          <p
+          <div
             style={{
               margin: "2px 4px 12px",
-              fontFamily: "'DM Sans'",
-              fontSize: "12px",
-              fontWeight: 600,
-              color: valid ? "#475569" : "#94a3b8",
-              lineHeight: 1.4,
+              padding: "10px 12px",
+              borderRadius: "12px",
+              background: "#f8fafc",
+              border: "1px solid #e2e8f0",
             }}
           >
-            {cmStatusText}
-          </p>
+            <p
+              style={{
+                margin: "0 0 8px",
+                fontFamily: "'Plus Jakarta Sans'",
+                fontSize: "11px",
+                fontWeight: 700,
+                color: "#94a3b8",
+                letterSpacing: "0.03em",
+              }}
+            >
+              Conversion Reference (cm to lvl)
+            </p>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr auto",
+                rowGap: "4px",
+                columnGap: "10px",
+              }}
+            >
+              {CONVERSION_REFERENCE.map((item) => (
+                <Fragment key={item.cm}>
+                  <span
+                    style={{
+                      fontFamily: "'DM Sans'",
+                      fontSize: "11px",
+                      color: "#64748b",
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {item.cm}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'DM Sans'",
+                      fontSize: "11px",
+                      color: "#475569",
+                      fontWeight: 600,
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    = {item.level}
+                  </span>
+                </Fragment>
+              ))}
+            </div>
+          </div>
 
           {/* Validation error */}
           {error && (
