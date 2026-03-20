@@ -19,6 +19,13 @@ const FloodLevel = ({ onSubmit }) => {
   const previewMood = valid ? getMood(numVal) : null;
   const previewT    = previewMood ? THEMES[previewMood] : null;
 
+  const cmStatusText = (() => {
+    if (!valid) return "Maglagay ng lvl mula sa 0-10 para makita ang katumbas na cm.";
+    if (numVal >= 10) return "Katumbas: 13 cm o mas mababa.";
+    if (numVal <= 0) return "Katumbas: 23 cm o mas mababa.";
+    return `Katumbas: ${Number((23 - numVal).toFixed(1))} cm.`;
+  })();
+
   const accentColor = previewT?.landingAccent ?? "#0284c7";
   const bgGrad      = previewT?.landingBg
     ?? "linear-gradient(160deg, #e0f2fe 0%, #e0e7ff 50%, #ede9fe 100%)";
@@ -182,6 +189,19 @@ const FloodLevel = ({ onSubmit }) => {
               lvl
             </div>
           </div>
+
+          <p
+            style={{
+              margin: "2px 4px 12px",
+              fontFamily: "'DM Sans'",
+              fontSize: "12px",
+              fontWeight: 600,
+              color: valid ? "#475569" : "#94a3b8",
+              lineHeight: 1.4,
+            }}
+          >
+            {cmStatusText}
+          </p>
 
           {/* Validation error */}
           {error && (
