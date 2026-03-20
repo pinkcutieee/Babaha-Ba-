@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
-import { MAX_CM, THEMES }   from "../components/Themes";
+import { MAX_LV, THEMES }   from "../components/Themes";
 import Header               from "./Header";
 import Footer               from "./Footer";
-import happyAsset from "../assets/2.svg";
-import anxiousAsset from "../assets/3.svg";
-import panickedAsset from "../assets/4.svg";
+import happyAsset from "../assets/happy.png";
+import anxiousAsset from "../assets/anxious.png";
+import panickedAsset from "../assets/scared.png";
 // import { HappyIllust, AnxiousIllust, PanickedIllust } from "./SVG";
 import { WavesArrowUp, TriangleAlert, Smile } from "lucide-react";
 
@@ -89,7 +89,6 @@ const Main = ({ threshold, onBack, reading }) => {
   }
 
   const MIN_FLOOD_DIST = 10; 
-  const pct = levelCm !== null ? Math.max(0, Math.min(100, ((MAX_CM - levelCm) / (MAX_CM - MIN_FLOOD_DIST)) * 100)) : 0;
 
   return (
     // Main dashboard display with live sensor data and ETA
@@ -130,9 +129,9 @@ const Main = ({ threshold, onBack, reading }) => {
         <div style={{ padding: "24px 18px 0" }}>
           <p style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: "10.5px", fontWeight: 700, color: "#94a3b8", letterSpacing: "0.08em", textTransform: "uppercase", margin: "0 0 12px 0" }}>Mga Sukatan</p>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            <MetricCard icon={<WavesArrowUp size={22} />} label="Water Level" tagalog="Antas ng Tubig" value={levelCm} theme={theme} delay={0} unit="cm" />
+            <MetricCard icon={<WavesArrowUp size={22} />} label="Water Level" tagalog="Antas ng Tubig" value={levelCm} theme={theme} delay={0} unit="lvl" />
             <MetricCard icon={<Smile size={22} />} label="Mood" tagalog="Lagay" value={reading?.mood_label} theme={theme} delay={70} />
-            <MetricCard icon={<TriangleAlert size={22} />} label="Threshold" tagalog="Limitasyon" value={threshold} unit="cm" theme={theme} delay={140} />
+            <MetricCard icon={<TriangleAlert size={22} />} label="Threshold" tagalog="Limitasyon" value={threshold} unit="lvl" theme={theme} delay={140} />
           </div>
         </div>
 

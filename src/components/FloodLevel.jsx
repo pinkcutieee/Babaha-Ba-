@@ -1,12 +1,12 @@
 import { useState }          from "react";
-import { MAX_CM, THEMES }    from "../components/Themes";
+import { MAX_LV, THEMES }    from "../components/Themes";
 import { getMood }           from "../utils/floodUtils";
 import { Waves } from "lucide-react";
 
 const RANGE_GUIDE = [
-  { label: "Ligtas",   range: "0–100 cm",   color: "#10b981", bg: "#d1fae5" },
-  { label: "Babala",   range: "101–200 cm", color: "#f59e0b", bg: "#fef3c7" },
-  { label: "Panganib", range: "201–300 cm", color: "#ef4444", bg: "#fee2e2" },
+  { label: "Ligtas",   range: "1–4 lvl",   color: "#10b981", bg: "#d1fae5" },
+  { label: "Babala",   range: "6–8 lvl", color: "#f59e0b", bg: "#fef3c7" },
+  { label: "Panganib", range: "9–10 lvl", color: "#ef4444", bg: "#fee2e2" },
 ];
 
 const FloodLevel = ({ onSubmit }) => {
@@ -15,7 +15,7 @@ const FloodLevel = ({ onSubmit }) => {
   const [focused, setFocused] = useState(false);
 
   const numVal      = parseFloat(raw);
-  const valid = raw !== "" && !isNaN(numVal) && numVal > 0 && numVal <= MAX_CM;
+  const valid = raw !== "" && !isNaN(numVal) && numVal >= 0 && numVal <= MAX_LV;
   const previewMood = valid ? getMood(numVal) : null;
   const previewT    = previewMood ? THEMES[previewMood] : null;
 
@@ -23,8 +23,6 @@ const FloodLevel = ({ onSubmit }) => {
   const bgGrad      = previewT?.landingBg
     ?? "linear-gradient(160deg, #e0f2fe 0%, #e0e7ff 50%, #ede9fe 100%)";
 
-  const safeMax    = valid ? Math.round(numVal * 0.33) : null;
-  const warningMax = valid ? Math.round(numVal * 0.66) : null;
 
   function handleChange(val) {
     setRaw(val);
@@ -34,7 +32,7 @@ const FloodLevel = ({ onSubmit }) => {
   function handleSubmit(e) {
     e.preventDefault();
     if (!valid) {
-      setError(`Mangyaring maglagay ng wastong halaga (0–${MAX_CM} cm).`);
+      setError(`Mangyaring maglagay ng wastong halaga (0–${MAX_LV} cm).`);
       return;
     }
     setError("");
@@ -151,7 +149,7 @@ const FloodLevel = ({ onSubmit }) => {
               className="input-field"
               type="number"
               min="0"
-              max={MAX_CM}
+              max={MAX_LV}
               step="0.1"
               placeholder="0"
               value={raw}
@@ -181,7 +179,7 @@ const FloodLevel = ({ onSubmit }) => {
                 transition: "background 0.3s, color 0.3s",
               }}
             >
-              cm
+              lvl
             </div>
           </div>
 

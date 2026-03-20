@@ -1,4 +1,4 @@
-export const MAX_CM = 300;
+export const MAX_LV = 10;
 
 /** Water level boundaries (cm) */
 export const THRESHOLDS = {

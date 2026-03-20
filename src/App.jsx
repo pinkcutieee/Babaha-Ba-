@@ -5,16 +5,40 @@ import Main       from "./components/Main";
 
 export default function App() {
   const [threshold, setThreshold] = useState(null) //actual threshold
-  const [cm, setCm] = useState(null); // set by user via FloodLevel form
+  const [lvl, setLvl] = useState(null); // set by user via FloodLevel form
+  const [cm, setCm] = useState(null); //converted lvl to cm
   const [reading,   setReading]   = useState(null); // live data from get_reading.php
   const [loading,   setLoading]   = useState(true);
+  
+  const convertToCm = (lvlInput) => {
+    //convert lvl to cm
+    if (lvlInput === null || lvlInput === undefined) return null;
+
+    const lvlNum = Number(lvlInput);
+
+    if (lvlNum <= 0) return 23;
+    if (lvlNum >= 10) return 13;
+
+    return 23 - lvlNum;
+  };
+  const convertToLvl = (cmRead) => {
+    //convert cm to lvl
+    if (cmRead === null || cmRead === undefined) return null;
+
+    const cmNum = Number(cmRead);
+    if (cmNum >= 23) return 0;
+    if (cmNum <= 13) return 10;
+
+    return 23 - cmNum;
+  }
 
   useEffect(() => {
     fetch("http://localhost/Babaha-Ba-/get_threshold.php")
       .then(res => res.json())
       .then(data => {
         if (data && data.house_threshold) {
-          setThreshold(data.house_threshold);
+          const lvlValue = convertToLvl(data.house_threshold) //call convert cm to lvl function
+          setThreshold(lvlValue);
         }
         setLoading(false); // Finished checking
       })
@@ -32,22 +56,30 @@ export default function App() {
           if (prev && data.id === prev.id && data.mood_label === prev.mood_label) {
             return prev;
           }
-          return data;
+          const lvlValue = convertToLvl(data.current_level);
+          return {
+            ...data,
+            current_level: lvlValue
+          }
         });
       })
       .catch(err => console.error("Fetch error:", err));
   };
 
-  const saveCm = (cmInput) => {
+  const saveCm = (lvlInput) => {
+    const cmValue = convertToCm(lvlInput); //call convert to cm function
+    setCm(cmValue);
+
     fetch("http://localhost/Babaha-Ba-/save_threshold.php", {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ threshold_lvl: cmInput }),
+      body:    JSON.stringify({ threshold_lvl: cmValue }),
     })
       .then(res => res.json())
       .then(data => {
         if (data.saved_threshold !== undefined) {
-          setThreshold(data.saved_threshold);
+          const lvlValue = convertToLvl(data.saved_threshold); // 🔥 FIX
+          setThreshold(lvlValue);
         }
         getReading();
       })
@@ -67,9 +99,9 @@ export default function App() {
       {threshold === null ? (
         /* ── Input screen: user sets their flood threshold ── */
         <FloodLevel
-          onSubmit={(cmInput) => {
-            setCm(cmInput);
-            saveCm(cmInput);
+          onSubmit={(lvlInput) => {
+            setLvl(lvlInput);
+            saveCm(lvlInput);
           }}
         />
       ) : (
@@ -78,9 +110,9 @@ export default function App() {
           threshold={threshold}
           reading={reading}
           onBack={() => setThreshold(null)}
-          onUpdate={(cmInput) => {
-            setCm(cmInput);
-            saveCm(cmInput);
+          onUpdate={(lvlInput) => {
+            setLvl(lvlInput);
+            saveCm(lvlInput);
           }}
         />
       )}
