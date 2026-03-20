@@ -22,13 +22,14 @@ switch ($method) {
         $rawdata = file_get_contents("php://input"); //get the raw json frontend sent
         $decoded_data = json_decode($rawdata, true); // convert to php array 
 
+        //if json is invalid, return error response
         if ($decoded_data === null) {
             http_response_code(400);
             echo json_encode(["error" => "Invalid JSON"]);
             exit();
         }
-        
-    $threshold_level = $decoded_data['threshold_lvl'] ?? 0;
+
+        $threshold_level = $decoded_data['threshold_lvl'] ?? 0;
         // Update the only settings row
         $stmt = $pdo->prepare("UPDATE settings SET house_threshold = ? WHERE id = 1");
         $stmt->execute([$threshold_level]);
@@ -40,6 +41,7 @@ switch ($method) {
         ]);
         exit();
 
+    // other request methods that are not allowed
     default:
         http_response_code(405);
         echo json_encode(["error" => "Method not allowed"]);
