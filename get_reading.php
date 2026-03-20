@@ -18,17 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $dist = floatval($latest['distance_cm']); 
         $thresh = floatval($latest['house_threshold']);
         
-    
         $last_update_time = strtotime($latest['date_detected']);
         $mins_since_last_update = floor((time() - $last_update_time) / 60);
         
         $ai_mins = (int)$latest['minutes_remaining'];
         if ($ai_mins > 0) {
-
             $ai_mins = max(0, $ai_mins - $mins_since_last_update);
         }
 
-        
         $timeStmt = $pdo->prepare("
             SELECT date_detected FROM flood_reading 
             WHERE distance_cm <= ? 
@@ -38,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $lastDanger = $timeStmt->fetch(PDO::FETCH_ASSOC);
 
         if ($lastDanger) {
-
             $start_time = strtotime($lastDanger['date_detected']);
             $mins_since_danger = floor((time() - $start_time) / 60);
         } else {
@@ -47,6 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         $latest['current_level'] = $dist;
         
+
+        // DANGER: Checks if the water hits the threshold
         if ($dist <= $thresh && $dist > 0) {
             $latest['mood_label'] = 'danger';
             $latest['minutes_remaining'] = 0;
@@ -56,15 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $latest['alert_status'] = "⚠️ ABOT NA ANG TUBIG! Mag-ingat!";
             }
         } 
-
+        // 2. WATCHFUL (RISING): If AI prediction says water is coming
         else if ($ai_mins > 0) {
             $latest['mood_label'] = 'watchful';
             $latest['minutes_remaining'] = $ai_mins;
             $latest['alert_status'] = $latest['alert_status'] ?? "Pataas ang tubig! " . $ai_mins . " mins na lang bago bumaha.";
         }
+        // 3-minute cooldown logic (Ardunio Day testing set to 30s)
         else {
-            if ($mins_since_danger >= 3) {
-                // 
+            if ($mins_since_danger >= 0.5) {
                 $latest['mood_label'] = 'safe';
                 $latest['minutes_remaining'] = 999;
                 $safe_remarks = [
@@ -87,3 +85,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     echo json_encode($latest);
 }
+?>

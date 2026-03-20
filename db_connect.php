@@ -1,8 +1,8 @@
 <?php
-$dbname = "flood_warningsys";
+$dbname = "flood_warning_sys";
 $user = "root";
 $pass = "";
-$port = "3307";
+$port = "3306";
 $host = "localhost";
 
 

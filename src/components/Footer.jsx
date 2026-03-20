@@ -15,7 +15,7 @@ const Footer = () => (
         lineHeight: 1.7,
       }}
     >
-      Flood Warning System PH · February 2026
+      Babaha Ba? · February 2026
       <br />
     </p>
   </div>

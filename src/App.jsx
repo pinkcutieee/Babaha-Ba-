@@ -33,7 +33,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    fetch("http://localhost/Babaha-Ba-/get_threshold.php")
+    fetch("http://localhost/LocalizedFloodWarning/get_threshold.php")
       .then(res => res.json())
       .then(data => {
         if (data && data.house_threshold) {
@@ -49,7 +49,7 @@ export default function App() {
   }, []);
 
   const getReading = () => {
-    fetch("http://localhost/Babaha-Ba-/get_reading.php")
+    fetch("http://localhost/LocalizedFloodWarning/get_reading.php")
       .then(res => res.json())
       .then(data => { 
         setReading(prev => {
@@ -70,7 +70,7 @@ export default function App() {
     const cmValue = convertToCm(lvlInput); //call convert to cm function
     setCm(cmValue);
 
-    fetch("http://localhost/Babaha-Ba-/save_threshold.php", {
+    fetch("http://localhost/LocalizedFloodWarning/save_threshold.php", {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
       body:    JSON.stringify({ threshold_lvl: cmValue }),
